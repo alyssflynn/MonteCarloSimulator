@@ -1,0 +1,21 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+/* .jumbotron {
+ background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/95/Nested_variant_of_urothelial_carcinoma_-_high_mag.jpg);
+ background-attachment: fixed;
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+} */
+
+/* .jumbotron{
+  background-image: url("../static/img/Auer_Rods_in_Leukemic_Blast.jpg");
+  background-size: cover;
+  background-color: "blue";
+} */
+
+.jumbotron{
+  background: none
+}

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet">
+    <!-- My CSS -->
+    <title>Monte Carlo Endowment Model</title>
+    <script>
+      var data = `{{ plot_data|tojson }}`;
+      console.log(data);
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <!-- Header plugins -->
+      <script src="../static/js/nav.js"></script> <!-- navbar -->
+      <!-- <script src="../static/js/jumbo-header.js"></script>  -->
+      <div class='jumbotron jumbotron-fluid' style='text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .2);'>
+        <div class='container'>
+          <h1 class='display-5'><strong>Monte</strong>Carlo</h1>
+          <p class='lead'>Stock Market Simulation Model</p>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="card col-md-3">
+            <div class="card-body">
+              <h3>Choose Values</h2><hr>
+              <p class="small text-muted text-right">Search by:</p>
+              <!-- FORM -->
+              <!-- <iframe src="https://datahub.io/core/nasdaq-listings/r/1.html" width="100%" height="100%" frameborder="0"></iframe> -->
+              <form method=post enctype=multipart/form-data >
+                <!-- Input 1 -->
+                <div class="form-group row">
+                  <!-- Label -->
+                  <label for="input1" class="col-sm-auto col-form-label">Ticker:</label>
+                  <!-- Input -->
+                  <div class="col-sm">
+                    <input type="text" class="form-control" id="input1" placeholder="PG">
+                    <!-- <script src="" -->
+                  </div>
+                </div>
+                <!-- Input 2 -->
+                <div class="form-group row">
+                  <!-- Label -->
+                  <label for="input2" class="col-sm-auto col-form-label">Start Date:</label>
+                  <!-- Input -->
+                  <div class="col-sm">
+                    <input type="text" class="form-control" id="input2" placeholder="2010-01-01">
+                  </div>
+                </div>
+                <!-- Input 3 -->
+                <div class="form-group row">
+                  <!-- Label -->
+                  <label for="input3" class="col-sm-auto col-form-label">End Date:</label>
+                  <!-- Input -->
+                  <div class="col-sm">
+                    <input type="text" class="form-control" id="input3" placeholder="now">
+                  </div>
+                </div>
+                <!-- </fieldset> -->
+                <!-- BUTTON -->
+                <div class="form-group row">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Output -->
+          <div class="card-body">
+            <!-- <div id="line-chart"></div> -->
+            <img src="static/img/PG-2018-10-06.png">
+          </div>
+        </div>
+      </div>
+      <!-- Output -->
+      <br>
+      <div class="container">
+        <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" onkeypress="load" src="https://plot.ly/~alyssflynn/2.embed" height="525" width="100%"></iframe>
+        <!-- <iframe frameBorder=0 width="100%" height="500px" onkeypress="load" src="plot.html" seamless></iframe> -->
+      </div>
+      <div class="container">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Stock Ticker Symbols Table</div>
+          <iframe src="https://datahub.io/core/nasdaq-listings/r/1.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+      </div>
+    </main>
+    <div class="container"><hr>
+      <footer class="mastfoot mt-auto">
+        <div class="inner text-muted">
+          <p>Some footer stuff '{{ plot_data }}'</p>
+        </div>
+      </footer>
+    </div>
+  <!-- </div> -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- <script src="../static/js/plot.js"></script> -->
+    <script>
+        var plot_data = '{{ plot_data }}';
+        console.log(plot_data);
+
+        // function makeSimPlot(actual, sim){
+        var lineDiv = document.getElementById('line-chart');
+      
+        var actual = {
+          x: plot_data['actual'][0],
+          y: plot_data['actual'][1],
+          type: 'scatter'
+        };
+        
+        var simulated = {
+          x: plot_data['simulated'][0],
+          y: plot_data['simulated'][1],
+          type: 'scatter'
+        };
+
+        var means = {
+          x: plot_data['means'][0],
+          y: plot_data['means'][1],
+          type: 'scatter'
+        };
+      
+        var data = [actual, simulated, means];
+
+        var layout = {
+          title:'{{ title }}'
+        };
+      
+        Plotly.plot( lineDiv, data, layout );
+        
+      </script>
+  </body>
+</html>
